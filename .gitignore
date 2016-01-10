@@ -1,0 +1,12 @@
+# Dependencies
+/bower_components/
+/node_modules/
+
+# Compiled output
+/output/
+/pallet.js
+
+# Local development
+/.pulp-cache/
+/.psci*
+/src/.webpack.js

@@ -1,0 +1,39 @@
+{
+  "name": "pallet",
+  "version": "0.0.1",
+  "description": "A package manager for Purescript.",
+  "main": "pallet.js",
+  "bin": {
+    "pallet": "pallet-bin"
+  },
+  "scripts": {
+    "lint": "jshint src",
+    "compile": "pulp build --force --optimise --to pallet.js",
+    "build": "npm run lint && npm run compile",
+    "test": "pulp run test",
+    "docs": "doctoc README.markdown && pulp docs",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/damncabbage/pallet.git"
+  },
+  "keywords": [
+    "purescript"
+  ],
+  "author": "Rob Howard <rob@robhoward.id.au>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/damncabbage/pallet/issues"
+  },
+  "homepage": "https://github.com/damncabbage/pallet#readme",
+  "dependencies": {
+    "bower": "1.7.2"
+  },
+  "devDependencies": {
+    "doctoc": "0.15.0",
+    "jshint": "^2.8.0",
+    "pulp": "^7.0.0",
+    "purescript": "~0.7.6"
+  }
+}
