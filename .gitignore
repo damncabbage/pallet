@@ -4,7 +4,6 @@
 
 # Compiled output
 /output/
-/pallet.js
 
 # Local development
 /.pulp-cache/
