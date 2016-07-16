@@ -67,4 +67,39 @@ Files need to be placed such that:
   * Exposed modules. Are they a good idea? Maybe default to everything, with the option to
     explicitly list? Maybe required so we can say what's in a package without needing to
     deep-inspect on publish?
+    * We need to know what modules are actually PureScript-y, but I don't think the exposed list is
+      the way to do it.
+  * Decision-progression Monad; short-circuiting to go and perform an action.
 
+    data Decision p e x = NeedToPerform p  -- eg. a phase
+                        | Failure e
+                        | KeepGoing x
+
+    instance apDecision :: Functor Decision where
+      fmap f a =
+        case a of
+          TerminateSuccess s -> TerminateSuccess s
+          TerminateFailure e -> TerminateFailure e
+          CarryOn c          -> CarryOn (f c)
+    instance applyDecision :: Apply Decision
+      apply f a =
+        case a of
+          TerminateSuccess s -> TerminateSuccess s
+          TerminateFailure e -> TerminateFailure e
+          CarryOn c          -> fmap f (\x -> x c)
+    instance applicativeDecision :: Applicative Decision where
+      pure a = WorkToDo a
+    instance bindDecision :: Bind Decision where
+      bind ma f =
+        case ma of
+          TerminateSuccess s -> TerminateSuccess s
+          TerminateFailure e -> TerminateFailure e
+          CarryOn c          -> f c
+
+    instance monadDecision :: Monad Decision
+
+  * For different tasks, need different configuration. A watch task needs beforeBuild / afterBuild
+    / afterBuildFailure (no other way to hook it, without "run this bit of PureScript"), but it
+    needs to reference a build task, but...
+
+  * Config file (pallet.local.json) for local project overrides; intentionally not for committing.
